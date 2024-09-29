@@ -10,6 +10,7 @@
 <div style="display: flex; flex-direction: row; column-gap: 60px;">
   <div style="width: 180px">
     <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}">
+    <input type="number" th:field="*{pid}" hidden />
       <label>Name</label>
       <input type="text" th:field="*{pname}" /><br/>
       <br/>
@@ -20,7 +21,7 @@
       <input type="text" th:field="*{brand}" /><br/>
       <br/>
       <label>Price</label>
-      <input type="number" th:field="*{price}"/> <br/>
+      <input type="number" step="0.01" th:field="*{price}"/> <br/>
       <br/>
       <label>Image URL</label>
       <input type="text" th:field="*{image}"/> <br/>

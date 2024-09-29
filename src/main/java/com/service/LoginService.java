@@ -26,7 +26,7 @@ public class LoginService {
     public String signIn(Login login) {
         Optional<Login> result = loginRepository.findByEmailAndPassword(login.getEmailid(), login.getPassword());
         if(result.isPresent()) {
-            Login l = result.get();
+            Login l = result.get();            
             return l.getType();
         }else {
             return "error";

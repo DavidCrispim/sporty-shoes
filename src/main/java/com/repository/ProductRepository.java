@@ -12,7 +12,7 @@ import com.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
-    @Query("select p from Product p where p.pname > :pname")
+    @Query("select p from Product p where p.pname = :pname")
     public Optional<Product> findProductByName(@Param("pname") String pname);
 
 }

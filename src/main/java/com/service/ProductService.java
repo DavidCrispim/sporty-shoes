@@ -17,36 +17,55 @@ public class ProductService {
     ProductRepository productRepository;
 
     public Boolean storeProduct(Product product) {
-        Optional<Product> result = productRepository.findProductByName(product.getPname());
-        if(result.isPresent()) {
-            return false;
-        }else {
-            productRepository.save(product);
-            return true;
-        }
+    	try {
+    		Optional<Product> result = productRepository.findProductByName(product.getPname());
+    	    if(result.isPresent()) {
+    	    	return false;
+    	    }else {
+    	    	productRepository.save(product);
+    	        return true;
+    	    }
+    	} catch (Exception e) {
+    		return false;
+    	}
+       
     }
 
     public Boolean updateProduct(Product product) {
-        Optional<Product> result = productRepository.findById(product.getPid());
-        if(result.isPresent()) {
-            Product p = result.get();
-            p.setPrice(product.getPrice());
-            p.setQuantity(product.getQuantity());
-            productRepository.saveAndFlush(p);
-            return true;
-        }else {
-            return false;
-        }
+    	System.out.println(product);
+    	try {
+    		Optional<Product> result = productRepository.findById(product.getPid());	
+            if(result.isPresent()) {
+                Product p = result.get();
+                p.setPname(product.getPname());
+                p.setType(product.getType());
+                p.setBrand(product.getBrand());
+                p.setImage(product.getImage());
+                p.setPrice(product.getPrice());
+                p.setQuantity(product.getQuantity());
+                productRepository.saveAndFlush(p);
+                return true;
+            }else {
+                return false;
+            }
+    	} catch (Exception e) {
+    		return false;
+    	}
+        
     }
 
     public Boolean deleteProduct(int pid) {
-        Optional<Product> product = productRepository.findById(pid);
-        if(product.isPresent()) {
-            productRepository.deleteById(pid);
-            return true;
-        }else {
-            return false;
-        }
+    	try {
+    		Optional<Product> product = productRepository.findById(pid);
+    	    if(product.isPresent()) {
+    	    	productRepository.deleteById(pid);
+    	        return true;
+    	    }else {
+    	    	return false;
+    	    }
+    	} catch (Exception e) {
+    		return false;
+    	}
     }
 
     public Product findProduct(int pid) {
