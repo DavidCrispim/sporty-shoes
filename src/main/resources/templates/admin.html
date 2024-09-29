@@ -3,71 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Page</title>
+  <style>
+    body * {
+      font-family: math;
+    }
+
+    .main-area > div {
+      display: none !important;
+    }
+
+    .main-area > div:target {
+      display: flex !important;
+    }
+
+    .tabs > a {
+      text-decoration: none;
+      padding: 8px;
+      background-color: lightgrey;
+      color: black;
+      display: block;
+    }
+
+    .tabs > a.selected,
+    .tabs > a:hover {
+      background-color: grey;
+    }
+
+    .tabs > a:not(:last-child) {
+      margin-right: 4px;
+    }
+
+    #users table * {
+      padding: 10px;
+    }
+
+     #users table th {
+      font-size: 18px;
+    }
+
+    #users table tr:nth-child(odd) {
+      background-color: lightgrey;
+    }
+
+  </style>
 </head>
-<body style="height:100vh; overflow-y: hidden; margin: 0px">
+<body style="height:100vh; margin: 0px">
 <h2 style="text-align: center; margin: 0; padding-top: 20px; padding-bottom: 20px">Admin Homepage</h2>
-<div style="display: flex; flex-direction: row; column-gap: 40px;">
-  <div style="width: 180px; margin-left:10px">
-    <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}">
-    <input type="number" th:field="*{pid}" hidden />
-      <label>Name</label>
-      <input type="text" th:field="*{pname}" /><br/>
-      <br/>
-      <label>Type</label>
-      <input type="text" th:field="*{type}" /><br/>
-      <br/>
-      <label>Brand</label>
-      <input type="text" th:field="*{brand}" /><br/>
-      <br/>
-      <label>Price</label>
-      <input type="number" step="0.01" th:field="*{price}"/> <br/>
-      <br/>
-      <label>Image URL</label>
-      <input type="text" th:field="*{image}"/> <br/>
-      <br/>
-      <label>Quantity</label>
-      <input type="number" th:field="*{quantity}"/> <br/>
-      <br/>
-      <input type="submit" th:value="${buttonText}" name="pButton"/>
-      <br/><br/>
-      <span th:text="${msgProductMgmtError}" style="color:red"></span>
-      <span th:text="${msgProductMgmtSuccess}" style="color:green"></span>
-    </form>
 
-    <br>
-    <hr style="border-top: dashed 1px;">
-    <br>
+<div class="tabs" style="display: flex; flex-direction: row; width: fit-content; margin-left: 12px">
+  <!-- TABS -->
+  <a href="#products" class="selected">Products</a>
+  <a href="#users">Users</a>
+  <a href="#orders">Orders</a>
+</div>
+<div class="main-area">
 
-    <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
-    	<label>Update Password</label><br/>
-      	<input type="password" th:field="*{password}" /><br/><br/>
-      	<input type="submit" value="Update"/>
-    	<br/><br/>
-   		<span th:text="${msgPasswordUpdtError}" style="color:red"></span>
-    	<span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
-    </form>
-  
-    <br>
-    <hr style="border-top: dashed 1px;">
-    <br>
-    
-  </div>
-  <div style="display: flex; gap: 40px; flex-wrap: wrap; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 80px);">
-    <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
-      <img th:src="${p.image}" style="width:256px;height:256px">
-      <div style="display:flex; flex-direction: column;">
-        <label th:text="${p.pname}" style="font-size:48px"></label>
-        <label th:text="${p.type}" style="font-size:36px"></label>
-        <label th:text="${p.brand}" style="font-size:24px"></label>
-        <label style="font-size:16px; margin-top:10px">Remaining units: <b th:text="${p.quantity}"></b></label>
-        <label th:inline="text" style="font-size:16px; margin-top:10px">$ [[${p.price}]]</label>
-        <div style="display:flex;flex-direction: row; margin-top:auto">
-          <a th:href="@{/deleteProduct(pid=${p.pid})}" style="margin-right: 10px; text-decoration: none;"> <img src="delete.png" style="width:24px;height:24px"></a>
-          <a th:href="@{/getProductInfo(pid=${p.pid})}"><img src="edit.png" style="width:24px;height:24px"></a>
+  <div id="products" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 12px; margin-left:12px">
+    <div style="width: 140px">
+        <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}">
+          <input type="number" th:field="*{pid}" hidden />
+          <label>Name</label>
+          <input type="text" th:field="*{pname}" /><br/>
+          <br/>
+          <label>Type</label>
+          <input type="text" th:field="*{type}" /><br/>
+          <br/>
+          <label>Brand</label>
+          <input type="text" th:field="*{brand}" /><br/>
+          <br/>
+          <label>Price</label>
+          <input type="number" step="0.01" th:field="*{price}"/> <br/>
+          <br/>
+          <label>Image URL</label>
+          <input type="text" th:field="*{image}"/> <br/>
+          <br/>
+          <label>Quantity</label>
+          <input type="number" th:field="*{quantity}"/> <br/>
+          <br/>
+          <input type="submit" th:value="${buttonText}" name="pButton"/>
+          <br/><br/>
+          <span th:text="${msgProductMgmtError}" style="color:red"></span>
+          <span th:text="${msgProductMgmtSuccess}" style="color:green"></span>
+        </form>
+
+        <br>
+        <hr style="border-top: dashed 1px;">
+        <br>
+
+        <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
+          <label>Update Password</label><br/>
+          <input type="password" th:field="*{password}" /><br/><br/>
+          <input type="submit" value="Update"/>
+          <br/><br/>
+          <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
+          <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
+        </form>
+
+
+
+      </div>
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-content: flex-start; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
+      <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
+        <img th:src="${p.image}" style="width:256px;height:256px">
+        <div style="display:flex; flex-direction: column;">
+          <label th:text="${p.pname}" style="font-size:48px"></label>
+          <label th:text="${p.type}" style="font-size:36px"></label>
+          <label th:text="${p.brand}" style="font-size:24px"></label>
+          <label style="font-size:16px; margin-top:10px">Remaining units: <b th:text="${p.quantity}"></b></label>
+          <label th:inline="text" style="font-size:16px; margin-top:10px">$ [[${p.price}]]</label>
+          <div style="display:flex;flex-direction: row; margin-top:auto">
+            <a th:href="@{/deleteProduct(pid=${p.pid})}" style="margin-right: 10px; text-decoration: none;"> <img src="delete.png" style="width:24px;height:24px"></a>
+            <a th:href="@{/getProductInfo(pid=${p.pid})}"><img src="edit.png" style="width:24px;height:24px"></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div id="users" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 12px; margin-left:12px">
+    <div style="width: 140px">
+      <form action="#" th:action="@{/addProduct}" method="post" th:object="${login_search}">
+        <label>Name</label>
+        <br/>
+        <input type="text" th:field="*{emailid}" /><br/>
+        <br/>
+        <input type="submit" th:value="Search" />
+      </form>
+
+      <br>
+      <hr style="border-top: dashed 1px;">
+      <br>
+
+      <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
+        <label>Update Password</label><br/>
+        <input type="password" th:field="*{password}" /><br/><br/>
+        <input type="submit" value="Update"/>
+        <br/><br/>
+        <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
+        <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
+      </form>
+    </div>
+
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-content: flex-start; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
+      <table style="width:800px">
+        <tr>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Type</th>
+        </tr>
+        <tr th:each="u:${users}">
+          <td th:text="${u.emailid}"></td>
+          <td th:text="${u.password}"></td>
+          <td th:text="${u.type}"></td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div id="orders">
+    <!-- ORDERS -->
+    <h2>Orders</h2>
+  </div>
+
+
 </div>
+
+<script type="text/javascript">
+  document.querySelectorAll(".tabs a").forEach(a => {
+    a.addEventListener("click", (e) => {
+      e.target.parentElement.querySelectorAll("a").forEach( a => a.classList.remove("selected"));
+      e.target.classList.add("selected");
+    });
+  });
+</script>
 </body>
 </html>
