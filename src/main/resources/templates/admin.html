@@ -12,28 +12,32 @@
       display: none !important;
     }
 
-    .main-area > div:target {
+    .main-area > div.visible {
       display: flex !important;
     }
 
-    .tabs > a {
+    .tabs > button {
       text-decoration: none;
-      padding: 8px;
+      padding: 12px;
       background-color: lightgrey;
       color: black;
-      display: block;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
     }
 
-    .tabs > a.selected,
-    .tabs > a:hover {
-      background-color: grey;
+    .tabs > button.selected,
+    .tabs > button:hover {
+      background-color: darkred;
+      color: white;
     }
 
-    .tabs > a:not(:last-child) {
+    .tabs > button:not(:last-child) {
       margin-right: 4px;
     }
 
-    #users table * {
+    #users table th,
+    #users table td {
       padding: 10px;
     }
 
@@ -52,9 +56,9 @@
 
 <div class="tabs" style="display: flex; flex-direction: row; width: fit-content; margin-left: 12px">
   <!-- TABS -->
-  <a href="#products" class="selected">Products</a>
-  <a href="#users">Users</a>
-  <a href="#orders">Orders</a>
+  <button data-target="#products">Products</button>
+  <button data-target="#users">Users</button>
+  <button data-target="#orders">Orders</button>
 </div>
 <div class="main-area">
 
@@ -98,11 +102,8 @@
           <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
           <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
         </form>
-
-
-
       </div>
-    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-content: flex-start; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
       <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
         <img th:src="${p.image}" style="width:256px;height:256px">
         <div style="display:flex; flex-direction: column;">
@@ -120,9 +121,9 @@
     </div>
   </div>
 
-  <div id="users" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 12px; margin-left:12px">
+  <div id="users" style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
     <div style="width: 140px">
-      <form action="#" th:action="@{/addProduct}" method="post" th:object="${login_search}">
+      <form action="#" th:action="@{/findUser}" method="get" th:object="${login_search}">
         <label>Name</label>
         <br/>
         <input type="text" th:field="*{emailid}" /><br/>
@@ -144,20 +145,19 @@
       </form>
     </div>
 
-    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-content: flex-start; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
-      <table style="width:800px">
-        <tr>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Type</th>
-        </tr>
-        <tr th:each="u:${users}">
-          <td th:text="${u.emailid}"></td>
-          <td th:text="${u.password}"></td>
-          <td th:text="${u.type}"></td>
-        </tr>
-      </table>
-    </div>
+    <table style="width:1000px; table-layout: fixed;">
+      <tr>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Type</th>
+      </tr>
+      <tr th:each="u:${users}">
+        <td th:text="${u.emailid}"></td>
+        <td th:text="${u.password}"></td>
+        <td th:text="${u.type}"></td>
+      </tr>
+    </table>
+
 
   </div>
 
@@ -170,10 +170,18 @@
 </div>
 
 <script type="text/javascript">
-  document.querySelectorAll(".tabs a").forEach(a => {
-    a.addEventListener("click", (e) => {
-      e.target.parentElement.querySelectorAll("a").forEach( a => a.classList.remove("selected"));
+  document.querySelector(`.tabs button[data-target="${localStorage.getItem("tab") || "#products"}"]`).classList.add("selected");
+  document.querySelector(localStorage.getItem("tab") || "#products").classList.add("visible");
+
+  document.querySelectorAll(".tabs button").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.target.parentElement.querySelectorAll("button").forEach( btn => btn.classList.remove("selected"));
       e.target.classList.add("selected");
+
+      document.querySelectorAll(".main-area > div").forEach( btn => btn.classList.remove("visible"));
+      document.querySelector(e.target.dataset.target).classList.add("visible");
+
+      localStorage.setItem("tab", e.target.dataset.target);
     });
   });
 </script>
