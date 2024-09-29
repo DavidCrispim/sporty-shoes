@@ -19,7 +19,6 @@ public class ProductController {
 
     @RequestMapping(value = "addProduct",method = RequestMethod.POST)
     public String addProduct(Login ll, Product pp, Model mm, @RequestParam("pButton") String buttonValue) {
-    	System.out.println("controller entrou");
         if(buttonValue.equals("Add Product")) {
             if( productService.storeProduct(pp)) {
                 mm.addAttribute("msgProductMgmtSuccess","Product Added!");
@@ -30,7 +29,6 @@ public class ProductController {
             mm.addAttribute("product", new Product());
 
         }else {
-        	System.out.println("controller update");
            if(productService.updateProduct(pp)) {
                 mm.addAttribute("msgProductMgmtSuccess","Product Updated!");
            } else {

@@ -35,6 +35,18 @@
       <span th:text="${msgProductMgmtSuccess}" style="color:green"></span>
     </form>
 
+    <br>
+    <hr style="border-top: dashed 1px;">
+    <br>
+
+    <form action="#" th:action="@{/updatePassword}" method="post" th:object="${login_updt}">
+      <label>Update Password</label><br/>
+      <input type="password" th:field="*{password}" /><br/><br/>
+      <input type="submit" value="Update"/>
+    </form>
+    <br>
+    <hr style="border-top: dashed 1px;">
+    <br>
   </div>
   <div style="display: flex; gap: 40px; flex-wrap: wrap;">
     <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">

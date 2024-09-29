@@ -32,7 +32,6 @@ public class ProductService {
     }
 
     public Boolean updateProduct(Product product) {
-    	System.out.println(product);
     	try {
     		Optional<Product> result = productRepository.findById(product.getPid());	
             if(result.isPresent()) {

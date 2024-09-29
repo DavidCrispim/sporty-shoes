@@ -42,4 +42,8 @@ public class LoginService {
             return true;
         }
     }
+
+    public Boolean updateAdminPassword(String newPassword) {
+        return loginRepository.updateAdminPassword(newPassword) > 0;
+    }
 }

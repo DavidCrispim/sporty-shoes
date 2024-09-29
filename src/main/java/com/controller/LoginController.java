@@ -34,7 +34,7 @@ public class LoginController {
         String result = loginService.signIn(ll);
         if(result.equals("admin")) {
             ll.setPassword("");
-            mm.addAttribute("login", ll);
+            mm.addAttribute("login_updt", ll);
             mm.addAttribute("buttonText", "Add Product");
 
             mm.addAttribute("products", productService.findAll());
@@ -70,6 +70,14 @@ public class LoginController {
         mm.addAttribute("login_signup", ll);
 
         return "login";
+    }
+
+    @RequestMapping(value = "updateAdminPassword",method = RequestMethod.POST)
+    public String updateAdminPassword(Login ll, Product pp, Model mm){
+        mm.addAttribute("login_updt", ll);
+        mm.addAttribute("buttonText", "Add Product");
+        mm.addAttribute("products", productService.findAll());
+        return "admin";
     }
 }
 
