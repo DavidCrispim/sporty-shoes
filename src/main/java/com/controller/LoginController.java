@@ -74,7 +74,14 @@ public class LoginController {
 
     @RequestMapping(value = "updateAdminPassword",method = RequestMethod.POST)
     public String updateAdminPassword(Login ll, Product pp, Model mm){
-        mm.addAttribute("login_updt", ll);
+
+        if(loginService.updateAdminPassword(ll.getPassword())){
+            mm.addAttribute("msgPasswordUpdtSuccess","Password update success!");
+        }else {
+            mm.addAttribute("msgPasswordUpdtError","Password update failed!");
+        }
+
+        mm.addAttribute("login_updt", new Login());
         mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("products", productService.findAll());
         return "admin";

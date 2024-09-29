@@ -44,6 +44,9 @@
       <input type="password" th:field="*{password}" /><br/><br/>
       <input type="submit" value="Update"/>
     </form>
+    <br/><br/>
+    <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
+    <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
     <br>
     <hr style="border-top: dashed 1px;">
     <br>
