@@ -21,6 +21,6 @@ public interface LoginRepository extends JpaRepository<Login, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Login l set l.password=:newPassword where l.type = admin")
-    public int updateAdminPassword(@Param("password") String newPassword);
+    @Query("update Login l set l.password=:password where l.type = \"admin\"")
+    public int updateAdminPassword(@Param("password") String password);
 }

@@ -18,10 +18,9 @@
   <br />
   <input type="submit" value="SignIn" />
   <input type="reset" value="Reset" />
+  <br /><br />
+  <span th:text="${msgSignInError}" style="color:red"></span>
 </form>
-<br />
-<span th:text="${msgSignInError}" style="color:red"></span>
-<br />
 <br />
 <br />
 <form action="#" th:action="@{signUp}" method="post" th:object="${login_signup}">
@@ -33,10 +32,10 @@
   <br />
   <input type="submit" value="SignUp" />
   <input type="reset" value="Reset" />
+  <br /><br />
+  <span th:text="${msgSignUpError}" style="color:red"></span>
+  <span th:text="${msgSignUpSuccess}" style="color:green"></span>
 </form>
-<br />
-<span th:text="${msgSignUpError}" style="color:red"></span>
-<span th:text="${msgSignUpSuccess}" style="color:green"></span>
 
 </body>
 

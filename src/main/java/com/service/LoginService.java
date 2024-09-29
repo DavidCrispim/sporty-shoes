@@ -43,7 +43,7 @@ public class LoginService {
         }
     }
 
-    public Boolean updateAdminPassword(String newPassword) {
-        return loginRepository.updateAdminPassword(newPassword) > 0;
+    public Boolean updateAdminPassword(String password) {
+        return loginRepository.updateAdminPassword(password) > 0;
     }
 }
