@@ -1,7 +1,9 @@
 package com.controller;
 
 import com.entity.Login;
+import com.entity.Product;
 
+import com.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    ProductService productService;
+
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String openLoginPage(Login ll, Model mm) {
         mm.addAttribute("login_signin", ll);
@@ -24,15 +29,18 @@ public class LoginController {
     }
 
     @RequestMapping(value = "signIn",method = RequestMethod.POST)
-    public String signIn(Login ll, Model mm) {
+    public String signIn(Login ll, Product pp, Model mm) {
 
         String result = loginService.signIn(ll);
         if(result.equals("admin")) {
             ll.setPassword("");
             mm.addAttribute("login", ll);
+            mm.addAttribute("buttonText", "Add Product");
 
+            mm.addAttribute("products", productService.findAll());
             return "admin";
         }else if(result.equals("customer")){
+            mm.addAttribute("products", productService.findAll());
             return "customer";
         } else {
             ll.setEmailid("");

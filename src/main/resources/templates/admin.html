@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Admin Page</title>
 </head>
 <body>
-<h2>Admin Page</h2>
+<h2 style="text-align:center;position: sticky; top: 10px; background-color: white;">Admin Homepage</h2>
+
+<div style="display: flex; flex-direction: row; column-gap: 60px;">
+  <div style="width: 180px">
+    <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}">
+      <label>Name</label>
+      <input type="text" th:field="*{pname}" /><br/>
+      <br/>
+      <label>Type</label>
+      <input type="text" th:field="*{type}" /><br/>
+      <br/>
+      <label>Brand</label>
+      <input type="text" th:field="*{brand}" /><br/>
+      <br/>
+      <label>Price</label>
+      <input type="number" th:field="*{price}"/> <br/>
+      <br/>
+      <label>Image URL</label>
+      <input type="text" th:field="*{image}"/> <br/>
+      <br/>
+      <label>Quantity</label>
+      <input type="number" th:field="*{quantity}"/> <br/>
+      <br/>
+      <input type="submit" th:value="${buttonText}" name="pButton"/>
+      <br/><br/>
+      <span th:text="${msgProductMgmtError}" style="color:red"></span>
+      <span th:text="${msgProductMgmtSuccess}" style="color:green"></span>
+    </form>
+
+  </div>
+  <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+    <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
+      <img th:src="${p.image}" style="width:256px;height:256px">
+      <div style="display:flex; flex-direction: column;">
+        <label th:text="${p.pname}" style="font-size:48px"></label>
+        <label th:text="${p.type}" style="font-size:36px"></label>
+        <label th:text="${p.brand}" style="font-size:24px"></label>
+        <label style="font-size:16px; margin-top:10px">Remaining units: <b th:text="${p.quantity}"></b></label>
+        <label th:inline="text" style="font-size:16px; margin-top:10px">$ [[${p.price}]]</label>
+        <div style="display:flex;flex-direction: row; margin-top:auto">
+          <a th:href="@{/deleteProduct(pid=${p.pid})}" style="margin-right: 10px; text-decoration: none;"> <img src="delete.png" style="width:24px;height:24px"></a>
+          <a th:href="@{/getProductInfo(pid=${p.pid})}"><img src="edit.png" style="width:24px;height:24px"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
