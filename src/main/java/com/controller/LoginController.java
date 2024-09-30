@@ -3,7 +3,7 @@ package com.controller;
 import com.entity.Login;
 import com.entity.Product;
 
-import com.service.OrderService;
+import com.service.TransactionService;
 import com.service.ProductService;
 import com.service.LoginService;
 
@@ -25,7 +25,7 @@ public class LoginController {
     ProductService productService;
 
     @Autowired
-    OrderService orderService;
+    TransactionService transactionService;
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String openLoginPage(Login ll, Model mm) {
@@ -47,7 +47,7 @@ public class LoginController {
 
             mm.addAttribute("products", productService.findAll());
             mm.addAttribute("users", loginService.findAll());
-            mm.addAttribute("orders", orderService.findAll());
+            mm.addAttribute("transactions", transactionService.findAll());
             return "admin";
         }else if(result.equals("customer")){
             mm.addAttribute("products", productService.findAll());

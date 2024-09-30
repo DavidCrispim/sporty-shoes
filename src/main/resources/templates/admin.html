@@ -38,18 +38,18 @@
 
     #users table th,
     #users table td,
-    #orders table th,
-    #orders table td {
+    #transactions table th,
+    #transactions table td {
       padding: 10px;
     }
 
      #users table th,
-     #orders table th {
+     #transactions table th {
       font-size: 18px;
     }
 
      #users table tr:nth-child(odd),
-     #orders table tr:nth-child(odd) {
+     #transactions table tr:nth-child(odd) {
       background-color: lightgrey;
     }
 
@@ -62,7 +62,7 @@
   <!-- TABS -->
   <button data-target="#products">Products</button>
   <button data-target="#users">Users</button>
-  <button data-target="#orders">Orders</button>
+  <button data-target="#transactions">Transactions</button>
 </div>
 <div class="main-area">
 
@@ -165,7 +165,7 @@
 
   </div>
 
-  <div id="orders"  style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
+  <div id="transactions"  style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
     <div style="width: 140px">
       <form action="#" th:action="@{/findUser}" method="get" th:object="${login_search}">
         <label>Name</label>
@@ -196,11 +196,11 @@
         <th>Timestamp</th>
         <th>Quantity</th>
       </tr>
-      <tr th:each="o:${orders}">
-        <td th:text="${o.emailid}"></td>
-        <td th:text="${o.pid}"></td>
-        <td th:text="${o.orderDateTime}"></td>
-        <td th:text="${o.quantity}"></td>
+      <tr th:each="t:${transactions}">
+        <td th:text="${t.emailid}"></td>
+        <td th:text="${t.pid}"></td>
+        <td th:text="${t.tDateTime}"></td>
+        <td th:text="${t.quantity}"></td>
       </tr>
     </table>
   </div>
@@ -209,6 +209,7 @@
 </div>
 
 <script type="text/javascript">
+	
   document.querySelector(`.tabs button[data-target="${localStorage.getItem("tab") || "#products"}"]`).classList.add("selected");
   document.querySelector(localStorage.getItem("tab") || "#products").classList.add("visible");
 
