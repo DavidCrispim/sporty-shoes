@@ -1,9 +1,7 @@
 package com.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Product {
@@ -16,6 +14,9 @@ public class Product {
     private String image;
     private float price;
     private int quantity;
+    @OneToMany
+    @JoinColumn(name = "emailid")
+    private List<Order> orders;
 
     public int getPid() {
         return pid;
@@ -71,6 +72,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

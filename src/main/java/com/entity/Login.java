@@ -2,6 +2,10 @@ package com.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity()
 public class Login {
@@ -10,6 +14,9 @@ public class Login {
     private String emailid;
     private String password;
     private String type;
+    @OneToMany
+    @JoinColumn(name = "emailid")
+    private List<Order> orders;
 
 
     public String getEmailid() {
@@ -31,6 +38,14 @@ public class Login {
     }
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

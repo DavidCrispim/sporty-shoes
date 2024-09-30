@@ -39,6 +39,7 @@ public class ProductController {
         mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("product", new Product());
         mm.addAttribute("products", productService.findAll());
+
         return "admin";
     }
 

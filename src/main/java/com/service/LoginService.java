@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.entity.Login;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +46,18 @@ public class LoginService {
 
     public Boolean updateAdminPassword(String password) {
         return loginRepository.updateAdminPassword(password) > 0;
+    }
+
+    public List<Login> findAll() {
+        return loginRepository.findAll();
+    }
+
+    public Login findUserByEmail(String email) {
+       Optional<Login> result = loginRepository.findByEmail(email);
+        if(result.isPresent()) {
+            return result.get();
+        }else {
+            return new Login();
+        }
     }
 }
