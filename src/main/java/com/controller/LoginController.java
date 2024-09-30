@@ -3,7 +3,6 @@ package com.controller;
 import com.entity.Login;
 import com.entity.Product;
 
-import com.entity.Transaction;
 import com.service.TransactionService;
 import com.service.ProductService;
 import com.service.LoginService;
@@ -29,9 +28,7 @@ public class LoginController {
     TransactionService transactionService;
 
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public String openLoginPage(Login ll, Model mm) {
-        mm.addAttribute("login_signin", ll);
-        mm.addAttribute("login_signup", ll);
+    public String openLoginPage(Model mm) {
         return "login";
     }
 
@@ -40,8 +37,6 @@ public class LoginController {
 
         String result = loginService.signIn(ll);
         if(result.equals("admin")) {
-            mm.addAttribute("login_updt", new Login());
-            mm.addAttribute("login_search", new Login());
             mm.addAttribute("product_mgmt", new Product());
             mm.addAttribute("buttonText", "Add Product");
 
@@ -51,13 +46,9 @@ public class LoginController {
             return "admin";
         }else if(result.equals("customer")){
             mm.addAttribute("buttonText", "Search");
-            mm.addAttribute("product_order", new Product());
             mm.addAttribute("products", productService.findAll());
-
             return "customer";
         } else {
-            mm.addAttribute("login_signin", new Login());
-            mm.addAttribute("login_signup", new Login());
             mm.addAttribute("msgSignInError","Sign In failed");
             return "login";
         }
@@ -68,30 +59,25 @@ public class LoginController {
     public String signUp(Login ll, Model mm) {
 
         ll.setType("customer");
+
         if(loginService.signUp(ll)) {
             mm.addAttribute("msgSignUpSuccess","Sign Up success");
         }else {
             mm.addAttribute("msgSignUpError","Sign Up failed");
         }
 
-        ll.setEmailid("");
-        ll.setPassword("");
-
-        mm.addAttribute("login_signin", ll);
-        mm.addAttribute("login_signup", ll);
-
         return "login";
     }
 
     @RequestMapping(value = "updateAdminPassword",method = RequestMethod.POST)
-    public String updateAdminPassword(Login ll, Product pp, Model mm){
-        if(loginService.updateAdminPassword(ll.getPassword())){
+    public String updateAdminPassword(Model mm, Login login){
+        if(loginService.updateAdminPassword(login.getPassword())){
             mm.addAttribute("msgPasswordUpdtSuccess","Password update success!");
         }else {
             mm.addAttribute("msgPasswordUpdtError","Password update failed!");
         }
 
-        mm.addAttribute("login_updt", new Login());
+        mm.addAttribute("product_mgmt", new Product());
         mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("products", productService.findAll());
 
@@ -99,10 +85,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "findUser",method = RequestMethod.GET)
-    public String findUser(Login ll, Product pp, Model mm, @RequestParam("emailid") String emailid){
-        mm.addAttribute("login_updt", new Login());
-        mm.addAttribute("login_search", ll);
+    public String findUser(Model mm, @RequestParam(required = false) String emailid){
         mm.addAttribute("buttonText", "Add Product");
+        mm.addAttribute("product_mgmt", new Product());
         mm.addAttribute("products", productService.findAll());
 
         if(emailid.isEmpty()){

@@ -9,12 +9,12 @@
 
 <h2>Login Page</h2>
 
-<form action="#" th:action="@{signIn}" method="post" th:object="${login_signin}">
+<form action="#" th:action="@{signIn}" method="post">
   <label>Email</label>
-  <input type="email" required="required" th:field="*{emailid}"><br />
+  <input type="email" required="required" name="emailid"><br />
   <br />
   <label>Password</label>
-  <input type="password" required="required" th:field="*{password}"><br />
+  <input type="password" required="required" name="password"><br />
   <br />
   <input type="submit" value="SignIn" />
   <input type="reset" value="Reset" />
@@ -23,12 +23,12 @@
 </form>
 <br />
 <br />
-<form action="#" th:action="@{signUp}" method="post" th:object="${login_signup}">
+<form action="#" th:action="@{signUp}" method="post">
   <label>Email</label>
-  <input type="email" required="required" th:field="*{emailid}"><br />
+  <input type="email" required="required" name="emailid"><br />
   <br />
   <label>Password</label>
-  <input type="password" required="required" th:field="*{password}"><br />
+  <input type="password" required="required" name="password"><br />
   <br />
   <input type="submit" value="SignUp" />
   <input type="reset" value="Reset" />

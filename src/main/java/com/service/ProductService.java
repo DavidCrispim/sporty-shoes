@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +78,9 @@ public class ProductService {
 
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    public List<Product> filterProducts(String name, String type, String brand, float price) {
+        return productRepository.filterProducts(name, type, brand, price);
     }
 }

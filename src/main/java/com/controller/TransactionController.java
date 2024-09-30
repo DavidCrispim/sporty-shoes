@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -35,17 +36,25 @@ public class TransactionController {
         }
 
         mm.addAttribute("buttonText", "Search");
-        mm.addAttribute("product_order", new Product());
         mm.addAttribute("products", productService.findAll());
         return "customer";
     }
 
     @RequestMapping(value = "findTransactionsByCategoryAndDate",method = RequestMethod.GET)
-    public String findTransactionsByCategoryAndDate(Model mm, @RequestParam("category") Optional<String> category, @RequestParam("date") Optional<String> date) {
-        mm.addAttribute("users", transactionService.findTransactionsByCategoryAndDate(category.orElse(""), date.orElse("")));
+    public String findTransactionsByCategoryAndDate(Model mm, @RequestParam(required = false) String category, @RequestParam(required = false) String date) {
+        if(category.isEmpty() && date.isEmpty() ) {
+            mm.addAttribute("transactions", transactionService.findAll());
+        } else {
+            LocalDateTime dateTime = null;
+            if(!date.isEmpty()) {
+                final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                dateTime = LocalDate.parse(date, formatter).atStartOfDay();
+            }
+
+            mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
+        }
+
         mm.addAttribute("product_mgmt", new Product());
-        mm.addAttribute("login_updt", new Login());
-        mm.addAttribute("login_search", new Login());
         mm.addAttribute("products", productService.findAll());
         return "admin";
     }

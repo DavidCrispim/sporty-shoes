@@ -59,14 +59,14 @@
 <h2 style="text-align: center; margin: 0; padding-top: 20px; padding-bottom: 20px">Admin Homepage</h2>
 
 <div class="tabs" style="display: flex; flex-direction: row; width: fit-content; margin-left: 12px">
-  <!-- TABS -->
   <button data-target="#products">Products</button>
   <button data-target="#users">Users</button>
   <button data-target="#transactions">Transactions</button>
+  <button data-target="#password">Password</button>
 </div>
 <div class="main-area">
 
-  <div id="products" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 12px; margin-left:12px">
+  <div id="products" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 24px; margin-left:12px">
     <div>
         <form action="#" th:action="@{/addProduct}" method="post" th:object="${product_mgmt}">
           <input type="number" th:field="*{pid}" hidden />
@@ -93,21 +93,8 @@
           <span th:text="${msgProductMgmtError}" style="color:red"></span>
           <span th:text="${msgProductMgmtSuccess}" style="color:green"></span>
         </form>
-
-        <br>
-        <hr style="border-top: dashed 1px;">
-        <br>
-
-        <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
-          <label>Update Password</label><br/>
-          <input type="password" th:field="*{password}" /><br/><br/>
-          <input type="submit" value="Update"/>
-          <br/><br/>
-          <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
-          <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
-        </form>
       </div>
-    <div style="display: flex; gap: 40px; flex-wrap: wrap; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 128px);">
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 140px);">
       <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
 
         <img th:src="${p.image}" style="width:256px;height:256px">
@@ -126,27 +113,14 @@
     </div>
   </div>
 
-  <div id="users" style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
+  <div id="users" style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 24px; margin-left:12px">
     <div>
-      <form action="#" th:action="@{/findUser}" method="get" th:object="${login_search}">
-        <label>Name</label>
+      <form action="#" th:action="@{/findUser}" method="get">
+        <label>Email</label>
         <br/>
-        <input type="text" th:field="*{emailid}" /><br/>
+        <input type="text" name="emailid" /><br/>
         <br/>
-        <input type="submit" th:value="Search" />
-      </form>
-
-      <br>
-      <hr style="border-top: dashed 1px;">
-      <br>
-
-      <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
-        <label>Update Password</label><br/>
-        <input type="password" th:field="*{password}" /><br/><br/>
-        <input type="submit" value="Update"/>
-        <br/><br/>
-        <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
-        <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
+        <input type="submit" value="Search" />
       </form>
     </div>
 
@@ -165,7 +139,7 @@
 
   </div>
 
-  <div id="transactions"  style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
+  <div id="transactions"  style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 24px; margin-left:12px">
     <div>
       <form action="#" th:action="@{/findTransactionsByCategoryAndDate}" method="get">
         <label>Category</label>
@@ -177,19 +151,6 @@
         <input type="date" name="date"/><br/>
         <br/>
         <input type="submit" th:value="Search" />
-      </form>
-
-      <br>
-      <hr style="border-top: dashed 1px;">
-      <br>
-
-      <form action="#" th:action="@{/updateAdminPassword}" method="post" th:object="${login_updt}">
-        <label>Update Password</label><br/>
-        <input type="password" th:field="*{password}" /><br/><br/>
-        <input type="submit" value="Update"/>
-        <br/><br/>
-        <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
-        <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
       </form>
     </div>
 
@@ -211,7 +172,16 @@
     </table>
   </div>
 
-
+  <div id="password" style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 24px; margin-left:12px">
+    <form action="#" th:action="@{/updateAdminPassword}" method="post">
+      <label>Update Password</label><br/>
+      <input type="password" required="required" name="password" /><br/><br/>
+      <input type="submit" value="Update"/>
+      <br/><br/>
+      <span th:text="${msgPasswordUpdtError}" style="color:red"></span>
+      <span th:text="${msgPasswordUpdtSuccess}" style="color:green"></span>
+    </form>
+  </div>
 </div>
 
 <script type="text/javascript">

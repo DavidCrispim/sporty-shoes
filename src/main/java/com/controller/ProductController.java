@@ -18,7 +18,7 @@ public class ProductController {
     ProductService productService;
 
     @RequestMapping(value = "addProduct",method = RequestMethod.POST)
-    public String addProduct(Login ll, Product pp, Model mm, @RequestParam("pButton") String buttonValue) {
+    public String addProduct(Product pp, Model mm, @RequestParam("pButton") String buttonValue) {
         if(buttonValue.equals("Add Product")) {
             if( productService.storeProduct(pp)) {
                 mm.addAttribute("msgProductMgmtSuccess","Product Added!");
@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "deleteProduct",method = RequestMethod.GET)
-    public String deleteProduct(Login ll, Product pp, Model mm, @RequestParam("pid") int pid) {
+    public String deleteProduct(Product pp, Model mm, @RequestParam("pid") int pid) {
         mm.addAttribute("buttonText", "Add Product");
 
         if(productService.deleteProduct(pid)) {
@@ -60,7 +60,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "getProductInfo",method = RequestMethod.GET)
-    public String getProductInfo(Login ll, Product pp, Model mm, @RequestParam("pid") int pid) {
+    public String getProductInfo(Product pp, Model mm, @RequestParam("pid") int pid) {
     	pp = productService.findProduct(pid);
     	
     	mm.addAttribute("product", pp);
@@ -68,5 +68,25 @@ public class ProductController {
 
         mm.addAttribute("products", productService.findAll());
         return "admin";
+    }
+
+    @RequestMapping(value = "filterProducts",method = RequestMethod.GET)
+    public String filterProducts(Model mm, @RequestParam(required = false) String name,
+                                 @RequestParam(required = false) String type,
+                                 @RequestParam(required = false) String brand,
+                                 @RequestParam(required = false) String price) {
+
+        if(name.isEmpty() && type.isEmpty() && brand.isEmpty() && price.isEmpty()) {
+            mm.addAttribute("products", productService.findAll());
+        } else {
+            float priceF = 0;
+            if(!price.isEmpty()){
+                priceF =  Float.parseFloat(price);
+            }
+
+            mm.addAttribute("products", productService.filterProducts(name, type, brand, priceF));
+        }
+
+        return "customer";
     }
 }
