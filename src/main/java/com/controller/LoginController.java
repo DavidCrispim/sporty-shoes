@@ -50,7 +50,10 @@ public class LoginController {
             mm.addAttribute("transactions", transactionService.findAll());
             return "admin";
         }else if(result.equals("customer")){
+            mm.addAttribute("buttonText", "Search");
+            mm.addAttribute("product_order", new Product());
             mm.addAttribute("products", productService.findAll());
+
             return "customer";
         } else {
             ll.setEmailid("");
