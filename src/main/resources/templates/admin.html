@@ -68,7 +68,7 @@
 
   <div id="products" style="display: flex; flex-direction: row; column-gap: 40px; padding-top: 12px; margin-left:12px">
     <div>
-        <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}">
+        <form action="#" th:action="@{/addProduct}" method="post" th:object="${product_mgmt}">
           <input type="number" th:field="*{pid}" hidden />
           <label>Name</label><br>
           <input type="text" th:field="*{pname}" /><br/>
@@ -163,15 +163,18 @@
       </tr>
     </table>
 
-
   </div>
 
   <div id="transactions"  style="display: flex; flex-direction: row; column-gap: 40px; align-items: flex-start; padding-top: 12px; margin-left:12px">
     <div>
-      <form action="#" th:action="@{/findUser}" method="get" th:object="${login_search}">
-        <label>Name</label>
+      <form action="#" th:action="@{/findTransactionsByCategoryAndDate}" method="get">
+        <label>Category</label>
         <br/>
-        <input type="text" th:field="*{emailid}" /><br/>
+        <input type="text" name="category" /><br/>
+        <br>
+        <label>Date</label>
+        <br/>
+        <input type="date" name="date"/><br/>
         <br/>
         <input type="submit" th:value="Search" />
       </form>
@@ -192,16 +195,18 @@
 
     <table style="width:100% ;margin-left: 100px; margin-right: 100px">
       <tr>
-        <th>Email</th>
         <th>Pid</th>
-        <th>Timestamp</th>
+        <th>Category</th>
+        <th>Date</th>
         <th>Quantity</th>
+        <th>Value</th>
       </tr>
       <tr th:each="t:${transactions}">
-       <!-- <td th:text="${t.emailid}"></td>
-        <td th:text="${t.pid}"></td>-->
+        <td th:text="${t.product.pid}"></td>
+        <td th:text="${t.product.type}"></td>
         <td th:text="${t.tDateTime}"></td>
         <td th:text="${t.quantity}"></td>
+        <td th:text="${t.value}"></td>
       </tr>
     </table>
   </div>

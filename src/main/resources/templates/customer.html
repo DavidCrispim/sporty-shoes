@@ -11,7 +11,7 @@
 <h2 style="text-align: center; margin: 0; padding-top: 20px; padding-bottom: 20px">Customer Homepage</h2>
 <div style="display: flex; flex-direction: row; column-gap: 200px; padding-top: 12px; margin-left:12px">
     <div >
-            <form action="#" th:action="@{/findProduct}" method="post" th:object="${product}">
+       <!--     <form action="#" th:action="@{/findProduct}" method="post" th:object="${product}">
             <input type="number" th:field="*{pid}" hidden />
             <label>Name</label><br>
             <input type="text" th:field="*{pname}" /><br/>
@@ -35,7 +35,7 @@
             <br/><br/>
             <span th:text="${msgTransactionStatusError}" style="color:red"></span>
             <span th:text="${msgTransactionStatusSuccess}" style="color:green"></span>
-        </form>
+        </form>-->
     </div>
     <div style="display: flex; gap: 40px; overflow-x: hidden; overflow-y: auto; height: calc(100vh - 100px); flex-direction: column; width: 100%;">
         <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">

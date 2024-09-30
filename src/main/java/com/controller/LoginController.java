@@ -3,6 +3,7 @@ package com.controller;
 import com.entity.Login;
 import com.entity.Product;
 
+import com.entity.Transaction;
 import com.service.TransactionService;
 import com.service.ProductService;
 import com.service.LoginService;
@@ -35,14 +36,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "signIn",method = RequestMethod.POST)
-    public String signIn(Login ll, Product pp, Model mm) {
+    public String signIn(Login ll, Model mm) {
 
         String result = loginService.signIn(ll);
         if(result.equals("admin")) {
-            ll.setEmailid("");
-            ll.setPassword("");
-            mm.addAttribute("login_updt", ll);
-            mm.addAttribute("login_search", ll);
+            mm.addAttribute("login_updt", new Login());
+            mm.addAttribute("login_search", new Login());
+            mm.addAttribute("product_mgmt", new Product());
             mm.addAttribute("buttonText", "Add Product");
 
             mm.addAttribute("products", productService.findAll());
@@ -56,10 +56,8 @@ public class LoginController {
 
             return "customer";
         } else {
-            ll.setEmailid("");
-            ll.setPassword("");
-            mm.addAttribute("login_signin", ll);
-            mm.addAttribute("login_signup", ll);
+            mm.addAttribute("login_signin", new Login());
+            mm.addAttribute("login_signup", new Login());
             mm.addAttribute("msgSignInError","Sign In failed");
             return "login";
         }

@@ -1,15 +1,12 @@
 package com.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static jakarta.persistence.TemporalType.DATE;
 
 @Entity()
 public class Transaction {
@@ -19,6 +16,7 @@ public class Transaction {
 	private int tid;
 	private LocalDateTime tDateTime;
 	private int quantity;
+	private float value;
 	  
 	@ManyToOne
 	@JoinColumn(name = "pid")
@@ -32,11 +30,11 @@ public class Transaction {
 		this.tid = tid;
 	}
 
-	public LocalDateTime getTDateTime() {
+	public LocalDateTime gettDateTime() {
 		return tDateTime;
 	}
 
-	public void setTDateTime(LocalDateTime tDateTime) {
+	public void settDateTime(LocalDateTime tDateTime) {
 		this.tDateTime = tDateTime;
 	}
 
@@ -46,6 +44,14 @@ public class Transaction {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
 	}
 
 	public Product getProduct() {
