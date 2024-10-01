@@ -70,22 +70,15 @@ public class ProductController {
         return "admin";
     }
 
-    @RequestMapping(value = "filterProducts",method = RequestMethod.GET)
-    public String filterProducts(Model mm, @RequestParam(required = false) String name,
-                                 @RequestParam(required = false) String type,
-                                 @RequestParam(required = false) String brand,
-                                 @RequestParam(required = false) String price) {
-
-        if(name.isEmpty() && type.isEmpty() && brand.isEmpty() && price.isEmpty()) {
+    @RequestMapping(value = "filterProducts",method = RequestMethod.GET)    	
+    public String filterProducts(Model mm, Product pp) {
+    	System.out.println(pp);
+    	if(pp.getPname().isEmpty() && pp.getType().isEmpty() && pp.getBrand().isEmpty() && pp.getPrice() == 0.0) {
             mm.addAttribute("products", productService.findAll());
-        } else {
-            float priceF = 0;
-            if(!price.isEmpty()){
-                priceF =  Float.parseFloat(price);
-            }
-
-            mm.addAttribute("products", productService.filterProducts(name, type, brand, priceF));
+        } else {         
+            mm.addAttribute("products", productService.filterProducts(pp));
         }
+    	 mm.addAttribute("product_filter", pp);
 
         return "customer";
     }

@@ -17,11 +17,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
     public Optional<Product> findProductByName(@Param("pname") String pname);
 
     @Query("select p from Product p where " +
-            "(:name is null or p.pname = :name)" +
-            "and (:type is null or p.type = :type)" +
-            "and (:brand is null or p.brand = :brand)" +
-            "and (:price is null or p.price = :price)"
+            "(:pname = \"\" or p.pname = :pname)" +
+            "and (:type = \"\" or p.type = :type)" +
+            "and (:brand = \"\" or p.brand = :brand)" +
+        	"and (:price = 0.0 or p.price <= :price)"
+
     )
-    public List<Product> filterProducts(String name, String type, String brand, float price);
+    public List<Product> filterProducts(@Param("pname") String pname, @Param("type") String type, @Param("brand") String brand, @Param("price") float price);
 
 }

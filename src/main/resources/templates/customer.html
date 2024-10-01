@@ -8,20 +8,21 @@
 <h2 style="text-align: center; margin: 0; padding-top: 20px; padding-bottom: 20px">Customer Homepage</h2>
 <div style="display: flex; flex-direction: row; padding-top: 12px; margin-left:12px">
     <div >
-        <form action="#" th:action="@{/filterProducts}" method="get">
+        <form action="#" th:action="@{/filterProducts}" method="get" th:object="${product_filter}">
         <label>Name</label><br>
-        <input type="text" name="pname" /><br/>
+        <input type="text" th:field=*{pname} /><br/> 
         <br/>
         <label>Type</label><br>
-        <input type="text" name="type" /><br/>
+        <input type="text" th:field=*{type} /><br/>
         <br/>
         <label>Brand</label><br>
-        <input type="text" name="brand" /><br/>
+        <input type="text" th:field=*{brand} /><br/>
         <br/>
-        <label>Price</label><br>
-        <input type="number" step="0.01" name="price"/> <br/>
+        <label>Price (less than)</label><br>
+        <span>< </span><input required="required" type="number" step="0.01" th:field=*{price}/> <br/>
         <br/>
         <input type="submit" value="Filter"/>
+        <input type="reset" value="Reset" />
         <br/><br/>
         <span th:text="${msgTransactionStatusError}" style="color:red"></span>
         <span th:text="${msgTransactionStatusSuccess}" style="color:green"></span>

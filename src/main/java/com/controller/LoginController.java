@@ -46,6 +46,7 @@ public class LoginController {
             return "admin";
         }else if(result.equals("customer")){
             mm.addAttribute("buttonText", "Search");
+            mm.addAttribute("product_filter", new Product());
             mm.addAttribute("products", productService.findAll());
             return "customer";
         } else {

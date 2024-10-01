@@ -31,7 +31,8 @@ public class TransactionService {
             if(transactionQuantity <= p.getQuantity()) {
                 p.setQuantity(p.getQuantity()-transactionQuantity);
                 productRepository.saveAndFlush(p);
-
+                
+                t.setQuantity(transactionQuantity);
                 t.settDateTime(LocalDateTime.now());
                 t.setValue(transactionQuantity * p.getPrice());
                 t.setProduct(p);
@@ -49,7 +50,7 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public List<Transaction> findTransactionsByCategoryAndDate(String category, LocalDateTime dateTime) {
+   /* public List<Transaction> findTransactionsByCategoryAndDate(String category, LocalDateTime dateTime) {
          return transactionRepository.findByCategoryAndDate(category, dateTime);
-    }
+    }*/
 }

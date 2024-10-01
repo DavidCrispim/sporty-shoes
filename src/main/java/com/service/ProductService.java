@@ -80,7 +80,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> filterProducts(String name, String type, String brand, float price) {
-        return productRepository.filterProducts(name, type, brand, price);
+    public List<Product> filterProducts(Product product) {
+    	System.out.println(product);
+    	/*if(product.getPrice() == 0.0) {
+    		System.out.println("entrou");
+    	}
+    	product.setPrice(0);
+    	System.out.println(product.getPrice());*/
+    	System.out.println(productRepository.filterProducts(product.getPname(), product.getType(), product.getBrand(), product.getPrice()));
+        return productRepository.filterProducts(product.getPname(), product.getType(), product.getBrand(), product.getPrice());
     }
 }

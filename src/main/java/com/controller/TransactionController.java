@@ -35,7 +35,7 @@ public class TransactionController {
             mm.addAttribute("msgTransactionStatusError","An error occurred!");
         }
 
-        mm.addAttribute("buttonText", "Search");
+        mm.addAttribute("product_filter", new Product());     
         mm.addAttribute("products", productService.findAll());
         return "customer";
     }
@@ -51,7 +51,7 @@ public class TransactionController {
                 dateTime = LocalDate.parse(date, formatter).atStartOfDay();
             }
 
-            mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
+           // mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
         }
 
         mm.addAttribute("product_mgmt", new Product());

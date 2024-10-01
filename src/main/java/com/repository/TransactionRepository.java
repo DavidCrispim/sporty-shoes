@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer>{
 
-    @Query("select t from Transaction t where " +
+   /* @Query("select t from Transaction t where " +
             "(:category is null or p.product.type = :category)" +
             "and (:dateTime is null or p.date = :dateTime)")
-    public List<Transaction> findByCategoryAndDate(String category, LocalDateTime dateTime);
+    public List<Transaction> findByCategoryAndDate(String category, LocalDateTime dateTime);*/
 }
