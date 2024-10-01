@@ -45,13 +45,16 @@ public class TransactionController {
         if(category.isEmpty() && date.isEmpty() ) {
             mm.addAttribute("transactions", transactionService.findAll());
         } else {
-            LocalDateTime dateTime = null;
+            LocalDateTime tDateTime = null;
+        	LocalDateTime tDateTimePlus1 = null;
+        	
             if(!date.isEmpty()) {
                 final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                dateTime = LocalDate.parse(date, formatter).atStartOfDay();
+                tDateTime = LocalDate.parse(date, formatter).atStartOfDay();
+            	tDateTimePlus1 = tDateTime.plusDays(1);
             }
             
-            mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
+            mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, tDateTime, tDateTimePlus1));
         }
 
         mm.addAttribute("product_mgmt", new Product());
