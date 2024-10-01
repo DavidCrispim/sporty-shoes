@@ -50,7 +50,7 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-   /* public List<Transaction> findTransactionsByCategoryAndDate(String category, LocalDateTime dateTime) {
-         return transactionRepository.findByCategoryAndDate(category, dateTime);
-    }*/
+    public List<Transaction> findTransactionsByCategoryAndDate(String type, LocalDateTime tDateTime) {    	
+        return transactionRepository.findByCategoryAndDate(type, tDateTime, tDateTime.plusDays(1));
+    }
 }

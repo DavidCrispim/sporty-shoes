@@ -50,11 +50,12 @@ public class TransactionController {
                 final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 dateTime = LocalDate.parse(date, formatter).atStartOfDay();
             }
-
-           // mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
+            
+            mm.addAttribute("transactions", transactionService.findTransactionsByCategoryAndDate(category, dateTime));
         }
 
         mm.addAttribute("product_mgmt", new Product());
+        mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("products", productService.findAll());
         return "admin";
     }

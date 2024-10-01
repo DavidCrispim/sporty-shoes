@@ -12,9 +12,15 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer>{
-
-   /* @Query("select t from Transaction t where " +
-            "(:category is null or p.product.type = :category)" +
-            "and (:dateTime is null or p.date = :dateTime)")
-    public List<Transaction> findByCategoryAndDate(String category, LocalDateTime dateTime);*/
+	
+	@Query("select t from Transaction t inner join t.product p where " + 
+            "(:type = \"\" or p.type = :type)" +
+			"and (:tDateTime is null or t.tDateTime between :tDateTime and :tDateTimePlus1)")
+    public List<Transaction> findByCategoryAndDate(
+    		@Param("type") String type, 
+    		@Param("tDateTime") LocalDateTime tDateTime,
+    		@Param("tDateTimePlus1") LocalDateTime tDateTimePlus1);
+    
+    
+    
 }
