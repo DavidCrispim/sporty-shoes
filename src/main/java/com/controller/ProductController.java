@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.entity.Product;
 import com.entity.Login;
+import com.service.LoginService;
 import com.service.ProductService;
+import com.service.TransactionService;
 
 @Controller
 public class ProductController {
@@ -17,6 +19,12 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    LoginService loginService;
+    
+    @Autowired
+    TransactionService transactionService;
+    
     @RequestMapping(value = "addProduct",method = RequestMethod.POST)
     public String addProduct(Product pp, Model mm, @RequestParam("pButton") String buttonValue) {
         if(buttonValue.equals("Add Product")) {
@@ -25,9 +33,6 @@ public class ProductController {
             } else {
                 mm.addAttribute("msgProductMgmtError","An error occurred!");
             }
-            mm.addAttribute("buttonText", "Add Product");
-            mm.addAttribute("product", new Product());
-
         }else {
            if(productService.updateProduct(pp)) {
                 mm.addAttribute("msgProductMgmtSuccess","Product Updated!");
@@ -37,25 +42,27 @@ public class ProductController {
         }
 
         mm.addAttribute("buttonText", "Add Product");
-        mm.addAttribute("product", new Product());
+        mm.addAttribute("product_mgmt", new Product());
         mm.addAttribute("products", productService.findAll());
+        mm.addAttribute("transactions", transactionService.findAll());
+        mm.addAttribute("users", loginService.findAll());
 
         return "admin";
     }
 
     @RequestMapping(value = "deleteProduct",method = RequestMethod.GET)
     public String deleteProduct(Product pp, Model mm, @RequestParam("pid") int pid) {
-        mm.addAttribute("buttonText", "Add Product");
-
         if(productService.deleteProduct(pid)) {
             mm.addAttribute("msgProductMgmtSuccess","Product Deleted!");
         } else {
             mm.addAttribute("msgProductMgmtError","An error occurred!");
         }
 
-        mm.addAttribute("product", new Product());
+        mm.addAttribute("product_mgmt", new Product());
         mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("products", productService.findAll());
+        mm.addAttribute("transactions", transactionService.findAll());
+        mm.addAttribute("users", loginService.findAll());
         return "admin";
     }
 
@@ -63,10 +70,12 @@ public class ProductController {
     public String getProductInfo(Product pp, Model mm, @RequestParam("pid") int pid) {
     	pp = productService.findProduct(pid);
     	
-    	mm.addAttribute("product", pp);
+    	mm.addAttribute("product_mgmt", pp);
         mm.addAttribute("buttonText", "Update Product");
 
         mm.addAttribute("products", productService.findAll());
+        mm.addAttribute("transactions", transactionService.findAll());
+        mm.addAttribute("users", loginService.findAll());
         return "admin";
     }
 

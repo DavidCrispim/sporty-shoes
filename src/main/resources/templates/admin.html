@@ -95,7 +95,7 @@
         </form>
       </div>
     <div style="display: flex; gap: 40px; flex-wrap: wrap; overflow-x: hidden; overflow-y: auto;height: calc(100vh - 140px);">
-      <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content">
+      <div th:each="p:${products}" style="display: flex; flex-direction: row; column-gap: 20px; height: fit-content; min-width: 500px">
 
         <img th:src="${p.image}" style="width:256px;height:256px">
         <div style="display:flex; flex-direction: column;">

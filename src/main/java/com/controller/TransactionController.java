@@ -3,6 +3,7 @@ package com.controller;
 import com.entity.Login;
 import com.entity.Product;
 import com.entity.Transaction;
+import com.service.LoginService;
 import com.service.ProductService;
 import com.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,13 @@ public class TransactionController {
 
     @Autowired
     ProductService productService;
+    
+    @Autowired
+    LoginService loginService;
 
     @RequestMapping(value = "placeTransaction/{pid}",method = RequestMethod.POST)
     public String placeTransaction(Product pp, Model mm, @PathVariable("pid") int pid) {
+    	System.out.println(mm);
         if (transactionService.placeTransaction(pid, pp.getQuantity())) {
             mm.addAttribute("msgTransactionStatusSuccess","Order placed!");
         } else {
@@ -60,6 +65,7 @@ public class TransactionController {
         mm.addAttribute("product_mgmt", new Product());
         mm.addAttribute("buttonText", "Add Product");
         mm.addAttribute("products", productService.findAll());
+        mm.addAttribute("users", loginService.findAll());
         return "admin";
     }
 }

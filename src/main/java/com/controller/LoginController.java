@@ -45,7 +45,11 @@ public class LoginController {
             mm.addAttribute("transactions", transactionService.findAll());
             return "admin";
         }else if(result.equals("customer")){
-            mm.addAttribute("buttonText", "Search");
+        	
+        	System.out.println(ll);
+        	
+        	mm.addAttribute("customer_login", ll);
+            
             mm.addAttribute("product_filter", new Product());
             mm.addAttribute("products", productService.findAll());
             return "customer";

@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class Product {
     @Id   
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pid;
     private String pname;
     private String brand;
@@ -14,7 +14,7 @@ public class Product {
     private String image;
     private float price;
     private int quantity;
-
+   
     public int getPid() {
         return pid;
     }

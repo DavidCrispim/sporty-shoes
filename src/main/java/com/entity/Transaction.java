@@ -12,7 +12,7 @@ import static jakarta.persistence.TemporalType.DATE;
 public class Transaction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int tid;
 	private LocalDateTime tDateTime;
 	private int quantity;
