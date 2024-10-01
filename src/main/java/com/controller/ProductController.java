@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.entity.Product;
-import com.entity.Login;
 import com.service.LoginService;
 import com.service.ProductService;
 import com.service.TransactionService;

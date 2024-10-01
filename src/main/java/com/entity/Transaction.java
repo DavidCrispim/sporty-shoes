@@ -1,12 +1,8 @@
 package com.entity;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import static jakarta.persistence.TemporalType.DATE;
 
 @Entity()
 public class Transaction {
