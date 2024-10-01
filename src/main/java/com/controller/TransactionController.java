@@ -33,7 +33,6 @@ public class TransactionController {
 
     @RequestMapping(value = "placeTransaction/{pid}",method = RequestMethod.POST)
     public String placeTransaction(Product pp, Model mm, @PathVariable("pid") int pid) {
-    	System.out.println(mm);
         if (transactionService.placeTransaction(pid, pp.getQuantity())) {
             mm.addAttribute("msgTransactionStatusSuccess","Order placed!");
         } else {

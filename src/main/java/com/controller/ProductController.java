@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "deleteProduct",method = RequestMethod.GET)
-    public String deleteProduct(Product pp, Model mm, @RequestParam("pid") int pid) {
+    public String deleteProduct(Model mm, @RequestParam("pid") int pid) {
         if(productService.deleteProduct(pid)) {
             mm.addAttribute("msgProductMgmtSuccess","Product Deleted!");
         } else {
@@ -67,8 +67,8 @@ public class ProductController {
     }
 
     @RequestMapping(value = "getProductInfo",method = RequestMethod.GET)
-    public String getProductInfo(Product pp, Model mm, @RequestParam("pid") int pid) {
-    	pp = productService.findProduct(pid);
+    public String getProductInfo(Model mm, @RequestParam("pid") int pid) {
+    	Product pp = productService.findProduct(pid);
     	
     	mm.addAttribute("product_mgmt", pp);
         mm.addAttribute("buttonText", "Update Product");
@@ -81,7 +81,6 @@ public class ProductController {
 
     @RequestMapping(value = "filterProducts",method = RequestMethod.GET)    	
     public String filterProducts(Model mm, Product pp) {
-    	System.out.println(pp);
     	if(pp.getPname().isEmpty() && pp.getType().isEmpty() && pp.getBrand().isEmpty() && pp.getPrice() == 0.0) {
             mm.addAttribute("products", productService.findAll());
         } else {         
