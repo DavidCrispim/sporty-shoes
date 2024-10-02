@@ -20,21 +20,21 @@ public class TransactionService {
     @Autowired
     ProductRepository productRepository;
 
-    public Boolean placeTransaction(int pid , int transactionQuantity) {
-        if (transactionQuantity == 0){
+    public Boolean placeTransaction(int pid , Transaction t) {
+        if (t.getQuantity() == 0){
             return false;
         }
-        Transaction t = new Transaction();
+      
         Optional<Product> result = productRepository.findById(pid);
         if(result.isPresent()) {
             Product p = result.get();
-            if(transactionQuantity <= p.getQuantity()) {
-                p.setQuantity(p.getQuantity()-transactionQuantity);
+            if(t.getQuantity() <= p.getQuantity()) {
+                p.setQuantity(p.getQuantity()-t.getQuantity());
                 productRepository.saveAndFlush(p);
                 
-                t.setQuantity(transactionQuantity);
+                t.setQuantity(t.getQuantity());
                 t.settDateTime(LocalDateTime.now());
-                t.setValue(transactionQuantity * p.getPrice());
+                t.setValue(t.getQuantity() * p.getPrice());
                 t.setProduct(p);
                 transactionRepository.save(t);
                 return true;

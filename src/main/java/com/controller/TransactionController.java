@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.entity.Login;
 import com.entity.Product;
 import com.entity.Transaction;
 import com.service.LoginService;
@@ -31,8 +30,8 @@ public class TransactionController {
     LoginService loginService;
 
     @RequestMapping(value = "placeTransaction/{pid}",method = RequestMethod.POST)
-    public String placeTransaction(Product pp, Model mm, @PathVariable("pid") int pid) {
-        if (transactionService.placeTransaction(pid, pp.getQuantity())) {
+    public String placeTransaction(Transaction tt, Model mm, @PathVariable("pid") int pid) {
+        if (transactionService.placeTransaction(pid, tt)) {
             mm.addAttribute("msgTransactionStatusSuccess","Order placed!");
         } else {
             mm.addAttribute("msgTransactionStatusError","An error occurred!");
